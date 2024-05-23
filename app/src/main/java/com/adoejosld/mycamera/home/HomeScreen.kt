@@ -61,14 +61,17 @@ fun HomeScreen() {
 private fun takePhoto(cameraController: LifecycleCameraController, executor: Executor) {
     val fileName = File.createTempFile("image", ".jpg")
     val outputFile = ImageCapture.OutputFileOptions.Builder(fileName).build()
-    cameraController.takePicture(outputFile, executor, object : ImageCapture.OnImageSavedCallback {
-        override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-            println(outputFileResults.savedUri)
-        }
+    cameraController.takePicture(/* outputFileOptions = */ outputFile, /* executor = */
+        executor, /* imageSavedCallback = */
+        object : ImageCapture.OnImageSavedCallback {
+            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                println(message = outputFileResults.savedUri)
+            }
 
-        override fun onError(p0: ImageCaptureException) {
+            override fun onError(p0: ImageCaptureException) {
+            }
         }
-    })
+    )
 }
 
 @Composable
